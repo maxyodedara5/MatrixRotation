@@ -1,0 +1,127 @@
+#include <iostream>
+using namespace std;
+
+class matrix_rot{
+public:
+    int sizeofmatrix_m,sizeofmatrix_n;
+    int mat[20][20];
+
+    void matrix_input();
+    void matrix_disp();
+    void matrix_rotation();
+    void innermat_rot();
+};
+
+void matrix_rot ::matrix_disp()
+{
+    for (int i=0;i<sizeofmatrix_m;i++)
+    {
+        for (int j=0;j<sizeofmatrix_n;j++)
+        {
+            cout<<mat[i][j];cout<<"\t";
+        }cout<<endl;
+    }
+}
+
+void matrix_rot :: matrix_input()
+{
+    cout<<"Enter the size of matrix m x n\n";
+    cin>>sizeofmatrix_m;
+	cin>>sizeofmatrix_n;
+    int var = 1;
+    for (int i=0;i<sizeofmatrix_m;i++)
+    {
+        for (int j=0;j<sizeofmatrix_n;j++)
+        {
+            mat[i][j] = var;
+            var++;
+        }
+    }
+
+}
+//simple double input loops for 2d matrix
+
+
+
+void matrix_rot ::matrix_rotation()
+{
+    int i,j;
+	i=0;j=0;
+    int corner1,corner2,corner3,corner4;
+    int a,b,x,y;
+    corner1 = mat[0+i][0+j];
+	corner2 = mat[0+i][sizeofmatrix_n-1-j];
+	corner3 = mat[sizeofmatrix_m-1-j][sizeofmatrix_n-1-j];
+	corner4 = mat[sizeofmatrix_m-1-i][0+j];
+    int counter;
+//giving the value of corners to adjacent positions
+//a and b variables for traversing the corners
+// a and b for matrix index to put values and x and y matrix to give values
+    a = 0+i; b = 0+j;
+    x =0+i; y = 1+j;
+    do
+    {
+    mat[a][b] = mat[x][y];
+        y++;
+        b++;
+    }while ( y!= sizeofmatrix_m);
+
+//traversing from corner 1 to corner 2
+
+    a =0+i; b = sizeofmatrix_n-1-j;
+    x =1+i; y = sizeofmatrix_n-1-j;
+    do
+    {
+        mat[a][b] = mat[x][y];
+        x++;
+        a++;
+    }while ( x!= sizeofmatrix_n);
+
+//traversing from corner 2 to corner 3 
+    a =sizeofmatrix_m-1-i; b =sizeofmatrix_n-1-j;
+    x =sizeofmatrix_m-1-i; y =sizeofmatrix_n-2-j;
+    do
+    {
+        mat[a][b] = mat[x][y];
+        y--;
+        b--;
+    }while ( b!= 0);
+
+//traversing from corner 3 to corner 4
+    a = sizeofmatrix_m-1-i; b = 0+i;
+    x = sizeofmatrix_m-2-j; y = 0+j;
+  do
+    {
+        mat[a][b] = mat[x][y];
+        x--;
+        a--;
+    }while ( a!= 0);
+
+
+//traversing from corner 4 to corner 1
+    mat[1+i][0+j] = corner1;
+	mat[0+i][sizeofmatrix_n-2-j] = corner2; //that is -1 and -1
+	mat[sizeofmatrix_m-2-i][sizeofmatrix_n-1-j] = corner3;
+	mat[sizeofmatrix_m-1-i][sizeofmatrix_n-2-j] = corner4;	
+
+}
+//end of rotation function 
+
+//function for inner rotation
+void matrix_rot :: innermat_rot()
+{
+
+} 
+
+
+int main()
+{
+    matrix_rot a;
+    a.matrix_input();
+    a.matrix_disp();
+    a.matrix_rotation();
+    cout<<"Rotated Matrix"<<endl;
+    a.matrix_disp();
+    return 0;
+
+}
